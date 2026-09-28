@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 // Importamos clases para organizar los componentes gráficos.
 import java.awt.*;
 
+import componentes.PanelGestionStock;
+
 
 // ============================================================
 // CLASE PRINCIPAL
@@ -250,6 +252,11 @@ public class GestorProductos extends JFrame {
         panelInferior.add(
                 lblTotal,
                 BorderLayout.EAST
+        );
+         // Panel de gestion de stock, con Atomic Design, en el centro.
+        panelInferior.add(
+                new PanelGestionStock(tabla, modelo, lblTotal),
+                BorderLayout.CENTER
         );
 
 
