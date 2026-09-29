@@ -14,6 +14,6 @@ public class PanelGestionStock extends JPanel {
         LogicaStock logica = new LogicaStock(tabla, modelo, lblTotal);
 
         add(new MoleculaAumentarStock(logica));
-        // Aca los companeros van sumando sus moleculas (disminuir, etc.)
+        add(new MoleculaDisminuirStock(logica));
     }
 }

@@ -58,6 +58,37 @@ public class LogicaStock {
         actualizarTotal();
         return true;
     }
+    
+        // Resta la cantidad al stock de la fila seleccionada.
+    public boolean disminuirStock(String textoCantidad) {
+        int fila = tabla.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(tabla, "Debe seleccionar un producto.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(textoCantidad.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(tabla, "La cantidad debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        double precio = Double.parseDouble(modelo.getValueAt(fila, 1).toString());
+        int stockActual = Integer.parseInt(modelo.getValueAt(fila, 2).toString());
+
+        if (cantidad <= 0 || cantidad > stockActual) {
+            JOptionPane.showMessageDialog(tabla, "Cantidad inválida. Stock disponible: " + stockActual, "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        int nuevoStock = stockActual - cantidad;
+        modelo.setValueAt(nuevoStock, fila, 2);
+        modelo.setValueAt(precio * nuevoStock, fila, 4);
+        actualizarTotal();
+        return true;
+    }
 
     // Recalcula el valor total del stock y lo muestra en la etiqueta.
     public void actualizarTotal() {
