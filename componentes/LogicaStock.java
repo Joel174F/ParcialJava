@@ -10,6 +10,7 @@ public class LogicaStock {
     private final JTable tabla;
     private final DefaultTableModel modelo;
     private final JLabel lblTotal;
+    private static final int UMBRAL_MINIMO = 5;
 
     public LogicaStock(JTable tabla, DefaultTableModel modelo, JLabel lblTotal) {
         this.tabla = tabla;
@@ -58,8 +59,8 @@ public class LogicaStock {
         actualizarTotal();
         return true;
     }
-    
-        // Resta la cantidad al stock de la fila seleccionada.
+
+    // Resta la cantidad al stock de la fila seleccionada.
     public boolean disminuirStock(String textoCantidad) {
         int fila = tabla.getSelectedRow();
         if (fila == -1) {
@@ -75,6 +76,7 @@ public class LogicaStock {
             return false;
         }
 
+        String nombreProducto = modelo.getValueAt(fila, 0).toString();
         double precio = Double.parseDouble(modelo.getValueAt(fila, 1).toString());
         int stockActual = Integer.parseInt(modelo.getValueAt(fila, 2).toString());
 
@@ -87,6 +89,10 @@ public class LogicaStock {
         modelo.setValueAt(nuevoStock, fila, 2);
         modelo.setValueAt(precio * nuevoStock, fila, 4);
         actualizarTotal();
+
+        // Evalúa automáticamente si el stock restante queda por debajo de 5
+        evaluarStockBajo(nombreProducto, nuevoStock);
+
         return true;
     }
 
@@ -97,5 +103,19 @@ public class LogicaStock {
             total += Double.parseDouble(modelo.getValueAt(i, 4).toString());
         }
         lblTotal.setText(String.format("Valor total del stock: $%.2f", total));
+    }
+
+    /**
+     * Evalúa si el stock es menor a 5 y dispara la alerta visual.
+     */
+    public static void evaluarStockBajo(String nombreProducto, int stockActual) {
+        if (stockActual < UMBRAL_MINIMO) {
+            String mensaje = "⚠ ¡ALERTA DE STOCK BAJO!\n\n" +
+                             "El producto '" + nombreProducto + "' tiene solo " + 
+                             stockActual + " unidad(es) disponible(s).";
+            
+            // Llama al Átomo para mostrar el diálogo
+            Atomos.mostrarAlerta(mensaje, "Stock Crítico");
+        }
     }
 }

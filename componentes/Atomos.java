@@ -1,6 +1,9 @@
 package componentes;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 // ATOMOS: las piezas mas chicas, reutilizables por todo el grupo.
 public class Atomos {
@@ -19,4 +22,11 @@ public class Atomos {
     public static JLabel crearEtiqueta(String texto) {
         return new JLabel(texto);
     }
+
+    // Átomo: Muestra mensajes de advertencia emergentes en pantalla
+    public static void mostrarAlerta(String mensaje, String titulo) {
+        JOptionPane.showMessageDialog(null, mensaje, titulo, JOptionPane.WARNING_MESSAGE);
+    }
 }
+ 
+

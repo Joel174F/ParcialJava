@@ -1,26 +1,25 @@
 package componentes;
 
 import javax.swing.*;
-import java.awt.FlowLayout;
 
-// MOLECULA: etiqueta + campo + boton, juntos para disminuir stock.
 public class MoleculaDisminuirStock extends JPanel {
 
-    public MoleculaDisminuirStock(LogicaStock logica) {
-        setLayout(new FlowLayout());
+    private final LogicaStock logica;
+    private final JTextField txtCantidad;
 
-        JTextField campoCantidad = Atomos.crearCampoCantidad();
-        JButton botonDisminuir = Atomos.crearBoton("Disminuir stock");
+    public MoleculaDisminuirStock(LogicaStock logica) {
+        this.logica = logica;
+
+        txtCantidad = Atomos.crearCampoCantidad();
+        JButton btnDisminuir = Atomos.crearBoton("Disminuir Stock");
+
+        btnDisminuir.addActionListener(e -> {
+            logica.disminuirStock(txtCantidad.getText());
+            txtCantidad.setText("");
+        });
 
         add(Atomos.crearEtiqueta("Cantidad:"));
-        add(campoCantidad);
-        add(botonDisminuir);
-
-        botonDisminuir.addActionListener(e -> {
-            // Solo limpiamos el campo si la operacion salio bien.
-            if (logica.disminuirStock(campoCantidad.getText())) {
-                campoCantidad.setText("");
-            }
-        });
+        add(txtCantidad);
+        add(btnDisminuir);
     }
 }

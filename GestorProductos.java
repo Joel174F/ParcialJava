@@ -1,13 +1,8 @@
 // Importamos los componentes principales de Swing.
-import javax.swing.*;
-
-// Importamos DefaultTableModel para administrar los datos de la JTable.
-import javax.swing.table.DefaultTableModel;
-
-// Importamos clases para organizar los componentes gráficos.
-import java.awt.*;
-
 import componentes.PanelGestionStock;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 
 // ============================================================
@@ -437,6 +432,7 @@ public class GestorProductos extends JFrame {
                         categoria
                 );
 
+        
 
         // ====================================================
         // AGREGAR A LA TABLA
@@ -460,7 +456,8 @@ public class GestorProductos extends JFrame {
                 // Columna 5.
                 producto.getValorStock()
         });
-
+// ---> AGREGAR ESTA LÍNEA EXACTAMENTE AQUÍ <---
+        componentes.LogicaStock.evaluarStockBajo(producto.getNombre(), producto.getStock());
 
         // Actualizamos el total.
         actualizarTotal();
