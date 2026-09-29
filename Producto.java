@@ -43,5 +43,15 @@ public class Producto {
     public double getValorStock() {
         return precio * stock;
     }
+
+    public boolean disminuirStock(int cantidad) {
+        if (cantidad > stock) {
+            System.out.println("No hay stock suficiente.");
+            return false;
+        } else {
+            stock = stock - cantidad;
+            return true;
+        }
+    }
 }
 
